@@ -1,0 +1,11 @@
+# This requirements file contains additional libraries,
+# that are not required for run, but helpfull for development
+
+# include runtime dependencies
+-r ./requirements.txt
+
+# black
+black==21.11b1
+
+# pytest
+pytest==6.2.5

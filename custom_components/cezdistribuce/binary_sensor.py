@@ -1,9 +1,9 @@
 __version__ = "0.2"
 
 import logging
-from . import downloader
 import voluptuous as vol
-from datetime import timedelta, datetime, date
+from . import downloader
+from datetime import timedelta
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 import homeassistant.helpers.config_validation as cv
 from homeassistant.components.binary_sensor import BinarySensorEntity
