@@ -13,33 +13,65 @@ BASE_URL = "https://www.cezdistribuce.cz/distHdo/adam/containers/"
 CEZ_TIMEZONE = ZoneInfo("Europe/Prague")
 
 
-def getCorrectRegionName(region):
+def getCorrectRegionName(region: str):
+    """
+    Sanitize and validate region name variable.
+
+    :param region: a string with a name of distribution region
+    :return: string
+    """
     region = region.lower()
-    for x in ["zapad", "sever", "stred", "vychod", "morava"]:
-        if x in region:
-            return x
+    valid_regions = ["zapad", "sever", "stred", "vychod", "morava"]
+    if region in valid_regions:
+        return region
+    else:
+        raise KeyError(f"Region {region} is not valid region.")
 
 
-def getRequestUrl(region, code):
+def getRequestUrl(region: str, code: str):
+    """
+    Compose request URI
+
+    :param region: a string with a name of distribution region
+    :param code: a string with
+    :return: string
+    """
     region = getCorrectRegionName(region)
-    return BASE_URL + region + "?&code=" + code.upper()
+    url = BASE_URL + region + "?&code=" + code.upper()
+    return url
 
 
-def timeInRange(start, end, x):
+def timeInRange(start: datetime, end: datetime, x: datetime):
+    """
+    :param start: datetime
+    :param end: datetime
+    :param x: datetime
+    :return: bool
+    """
     if start <= end:
         return start <= x <= end
     else:
         return start <= x or x <= end
 
 
-def parseTime(date_time_str):
-    if not date_time_str:
+def parseTime(time_str: str):
+    """
+    Parse time from %H:%M string format into time object
+
+    :param time_str: a string in %H:%M format
+    :return: datetime
+    """
+    if not time_str:
         return datetime.time(0, 0)
     else:
-        return datetime.datetime.strptime(date_time_str, "%H:%M").time()
+        return datetime.datetime.strptime(time_str, "%H:%M").time()
 
 
 def parseDate(date_time_str):
+    """
+    :param date_time_str:
+    :return: datetime
+    """
     return datetime.datetime.strptime(date_time_str, "%Y-%m-%d %H:%M:%S.%f")
 
 
